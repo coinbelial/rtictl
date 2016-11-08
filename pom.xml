@@ -598,6 +598,22 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/UserAgentUtils-1.13.jar</systemPath>
 		</dependency>
+
+		<!--org.dbunit-->
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>2.4.8</version>
+            <scope>test</scope>
+        </dependency>
+
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-antrun-plugin</artifactId>
+			<version>1.8</version>
+		</dependency>
+
+
 		
 		<!-- 自定义jar依赖包
 		<dependency>
@@ -689,7 +705,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.4</version>
 				<configuration>
-					<encoding>${project.build.sourceEncoding}</encoding>
+					<!--<encoding>${project.build.sourceEncoding}</encoding>-->
 				</configuration>
 				<!-- <executions>
 					<execution>
@@ -854,7 +870,8 @@
 							<value>${project.build.sourceEncoding}</value>
 						</systemProperty>
 					</systemProperties>
-				</configuration>
+                    <stopKey/>
+                </configuration>
 			</plugin>
 			
 			<!-- resource插件 -->
@@ -895,6 +912,7 @@
 	</build>
 	
 	<profiles>
+
 		<!-- 初始化数据库 -->			
 		<profile>
 			<id>init-db</id>
@@ -907,7 +925,7 @@
 			  	<dependency>
 				    <groupId>org.apache.poi</groupId>
 				    <artifactId>poi</artifactId>
-				    <version>3.2-FINAL</version>
+				    <version>3.9</version>
 				</dependency>
 			</dependencies>
 			<build>
@@ -915,7 +933,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-antrun-plugin</artifactId>
-						<version>1.7</version>
+						<version>1.8</version>
 						<configuration>
 							<target>
 								
@@ -928,8 +946,8 @@
 								<!-- oracle
 								<property name="dbunit.datatype" value="org.dbunit.ext.oracle.Oracle10DataTypeFactory" /> -->
 								
-								<property file="src/main/resources/jeesite.properties" />
-								<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" 
+								<property file="${project.baseUri}/src/main/resources/jeesite.properties" />
+								<sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}"
 									onerror="continue" encoding="${project.build.sourceEncoding}">
 									<classpath refid="maven.test.classpath" />
 									<transaction src="db/sys/jeesite_${jdbc.type}.sql"/>
